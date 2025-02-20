@@ -1,4 +1,5 @@
 import "./intro.css";
+import Pokemon from "./components/Pokemon/Pokemon.tsx";
 
 function App() {
   return (
@@ -11,10 +12,10 @@ function App() {
         </div>
         <div>
           Commence par créer ton premier pokemon:
-          <div className="justify-center">
-            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png" />
-            <p>Mew</p>
-            <p>151</p>
+          <div>
+            <Pokemon name="Mew" num={150} />
+            <Pokemon name="Carapuce" num={7} />
+            <Pokemon name="Salamèche" num={4} />
           </div>
         </div>
       </div>
