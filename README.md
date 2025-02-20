@@ -23,8 +23,34 @@ nvm use
 npm i
 ```
 
-### Lancer le serveur
+### Lancer le serveur React
 
 ```bash
-npm run dev
+cd react-app
+pnpm install
+pnpm start
+```
+
+### Lancer le serveur Next.js
+
+```bash
+pnpm install
+pnpm run dev
+```
+
+### Installer l'API
+
+Start everything by
+
+```bash
+cd pokeapi-master/
+sudo make docker-setup
+```
+
+If you don't have make on your machine you can use the following commands
+
+```bash
+docker compose up -d
+docker compose exec -T app python manage.py migrate --settings=config.docker-compose
+docker compose exec -T app sh -c 'echo "from data.v2.build import build_all; build_all()" | python manage.py shell --settings=config.docker-compose'
 ```
