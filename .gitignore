@@ -39,3 +39,6 @@ next-env.d.ts
 
 # Remove prettier for learning purposes
 .prettierrc.json
+
+pnpm-lock.yaml
+/react-app/pnpm-lock.yaml
