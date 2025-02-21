@@ -1,5 +1,6 @@
 import "./intro.css";
 import React from "react";
+import { useEffect } from "react";
 import Pokemon from "./components/Pokemon/Pokemon.tsx";
 
 const POKEMON_LIST: Pokemon[] = [
@@ -7,13 +8,35 @@ const POKEMON_LIST: Pokemon[] = [
   { name: "Mewtwo", num: 150 },
   { name: "Dracolosse", num: 149 },
 ];
+interface PokemonInfo {
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+}
+async function fetchPokemons() {
+  // Avec des promesses
+  const resultat = await fetch("https://pokeapi.co/api/v2/pokedex/2", {
+    headers: { Accept: "application/json", "Content-Type": "application/json" },
+  }).then((response) => response.json());
+  //.then((pokemonData) => console.log(pokemonData));
+  return resultat;
+}
 
 export default function App() {
   const [filterValue, setFilterValue] = React.useState("");
-  const [pokemonsValue, setpokemonsValue] = React.useState(POKEMON_LIST);
+  //const [pokemonsValue, setpokemonsValue] = React.useState([]);
+  const [pokemonList, setPokemonList] = React.useState<PokemonInfo[]>([]);
 
-  function filterPokemonsByName(listePokemons: Pokemon[], namePokemon: string) {
-    setpokemonsValue(
+  useEffect(() => {
+    setPokemonList(await fetchPokemons());
+  }, []);
+
+  function filterPokemonsByName(
+    listePokemons: PokemonInfo[],
+    namePokemon: string
+  ) {
+    setPokemonList(
       listePokemons.filter((poke) =>
         poke.name.toLowerCase().startsWith(namePokemon.toLowerCase())
       )
@@ -22,8 +45,7 @@ export default function App() {
 
   const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterValue(event.target.value);
-    filterPokemonsByName(POKEMON_LIST, event.target.value);
-    //console.log(filterPokemonsByName(POKEMON_LIST, event.target.value));
+    filterPokemonsByName(pokemonList, event.target.value);
   };
 
   return (
@@ -42,9 +64,9 @@ export default function App() {
           Commence par créer ton premier pokemon:
           <div>
             <ul>
-              {pokemonsValue.map((pok) => (
+              {pokemonList.map((pok: PokemonInfo) => (
                 <li>
-                  <Pokemon name={pok.name} num={pok.num} />
+                  <Pokemon name={pok.name} num={pok.id} />
                 </li>
               ))}
             </ul>
