@@ -27,7 +27,6 @@ async function fetchPokemons() {
         },
     });
     const resultat = await response.json();
-    throw new Error();
     return resultat;
 }
 
