@@ -16,3 +16,12 @@ body {
 .loader {
   text-align: center;
 }
+
+.pokedex {
+  display: grid;
+  grid-template-columns: repeat (5, 1fr);
+}
+.app {
+  margin-left: 200px;
+  margin-right: 200px;
+}
