@@ -1,7 +1,7 @@
 @font-face {
     font-family: "PokemonEmerald";
     src: local("PokemonEmerald"),
-        url(./fonts/pokemon-emerald.ttf) format("truetype");
+        url(../../fonts/pokemon-emerald.ttf) format("truetype");
 }
 
 body {
