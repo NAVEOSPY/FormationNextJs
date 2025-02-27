@@ -1,18 +1,30 @@
+import Pokedex from "@/components/templates/Pokedex/Pokedex";
 import "./intro.css";
-import PokedexWithContext from "@/components/molecules/PokedexWithContext";
+import PokedexWithContext, {
+  PokemonInfo,
+} from "@/components/molecules/PokedexWithContext";
 
 export default async function RootPage() {
-    return (
-        <div className="intro">
-            <div>Bienvenue sur ton futur pokédex !</div>
-            <div>
-                Tu vas pouvoir apprendre tout ce qu il faut sur React puis
-                Next.js, et attraper des pokemons !
-            </div>
-            <div>Commence par créer ton premier pokemon: Mew !</div>
-            <div>
-                <PokedexWithContext />
-            </div>
-        </div>
-    );
+  async function fetchPokemons() {
+    // Avec des promesses
+    const response = await fetch("https://pokeapi.co/api/v2/pokedex/2", {});
+    const resultat = await response.json();
+    return resultat;
+  }
+
+  const resultat: { pokemon_entries: PokemonInfo[] } = await fetchPokemons();
+
+  return (
+    <div className="intro">
+      <div>Bienvenue sur ton futur pokédex !</div>
+      <div>
+        Tu vas pouvoir apprendre tout ce qu il faut sur React puis Next.js, et
+        attraper des pokemons !
+      </div>
+      <div>Commence par créer ton premier pokemon: Mew !</div>
+      <div>
+        <Pokedex pokemonsList={resultat.pokemon_entries} />
+      </div>
+    </div>
+  );
 }
