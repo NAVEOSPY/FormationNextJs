@@ -1,12 +1,17 @@
 interface Props {
-  paginate: number;
+    paginateState: [
+        paginate: number,
+        setPaginate: (newPaginate: number) => void,
+    ];
 }
 
-export default function Pagination() {
-  return (
-    <div className="pagination">
-      <div onClick={() => (paginate = paginate - 1)}>{"<"}</div>
-      <div onClick={() => (paginate = paginate + 1)}>{">"}</div>
-    </div>
-  );
+export default function Pagination({ paginateState }: Props) {
+    const [paginate, setPaginate] = paginateState;
+
+    return (
+        <div className="pagination">
+            <div onClick={() => setPaginate(paginate - 1)}>{"<"}</div>
+            <div onClick={() => setPaginate(paginate + 1)}>{">"}</div>
+        </div>
+    );
 }

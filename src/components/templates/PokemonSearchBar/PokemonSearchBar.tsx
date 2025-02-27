@@ -1,12 +1,20 @@
-import Pagination from "@/components/molecules/Pagination/Pagination";
+import { ChangeEvent, useState } from "react";
+
 interface Props {
-  paginate: number;
+    callback: (newInputValue: string) => void;
 }
-export default function PokemonSearchBar({ paginate }: Props) {
-  return (
-    <div>
-      <div>{paginate}</div>
-      <Pagination paginate={paginate} />
-    </div>
-  );
+
+export default function PokemonSearchBar({ callback }: Props) {
+    const [value, setValue] = useState<string>("");
+
+    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value);
+        callback(event.target.value);
+    };
+
+    return (
+        <div>
+            <input onChange={onInputChange} value={value} />
+        </div>
+    );
 }
