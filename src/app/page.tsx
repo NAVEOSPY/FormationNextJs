@@ -1,3 +1,4 @@
+import Pokedex from "@/components/templates/Pokedex/Pokedex";
 import "./intro.css";
 
 export default function Home() {
@@ -9,6 +10,9 @@ export default function Home() {
         attraper des pokemons !
       </div>
       <div>Commence par créer ton premier pokemon: Mew !</div>
+      <div>
+        <Pokedex />
+      </div>
     </div>
   );
 }
