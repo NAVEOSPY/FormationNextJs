@@ -1,66 +1,69 @@
 import Image from "next/image";
+import "./page.css";
 
 interface PokemonSprites {
-  front_default: string;
-  back_default: string;
-  front_shiny: string;
-  back_shiny: string;
+    front_default: string;
+    back_default: string;
+    front_shiny: string;
+    back_shiny: string;
 }
 
 interface PokemonType {
-  name: string;
+    type: { name: string };
 }
 export interface PokemonPresentation {
-  name: string;
-  sprites: PokemonSprites;
-  types: PokemonType[];
+    name: string;
+    sprites: PokemonSprites;
+    types: PokemonType[];
 }
 
 const fetchPokemonsbyId = async (id: string) => {
-  // Avec des promesses
+    // Avec des promesses
 
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  const resultat: PokemonPresentation = await response.json();
-  return resultat;
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+    });
+    const resultat: PokemonPresentation = await response.json();
+    return resultat;
 };
 
 export default async function Page({
-  params,
+    params,
 }: {
-  params: Promise<{ id: string }>;
+    params: Promise<{ id: string }>;
 }) {
-  const id = (await params).id;
-  const pokemon: PokemonPresentation = await fetchPokemonsbyId(id);
-  const sprites = pokemon.sprites;
-  const example = () => (
-    <Image
-      src={sprites.back_default}
-      width={10}
-      height={10}
-      alt={pokemon.name}
-    />
-  );
+    const id = (await params).id;
+    const pokemon: PokemonPresentation = await fetchPokemonsbyId(id);
+    const sprites = [
+        pokemon.sprites.front_default,
+        pokemon.sprites.back_default,
+        pokemon.sprites.front_shiny,
+        pokemon.sprites.back_shiny,
+    ];
 
-  return (
-    <div>
-      <p>{pokemon.name} </p>
-      <p>{sprites.back_default} </p>
-      <p>{sprites.back_shiny} </p>
-      <p>{sprites.front_default} </p>
-      <p>{sprites.front_shiny} </p>
-      <p>{example()}</p>
-
-      <div>Hello world : {id}</div>
-      <div>
-        {pokemon.types.map((popo: PokemonType) => (
-          <div>{popo.name}</div>
-        ))}
-      </div>
-    </div>
-  );
+    return (
+        <div className="pokemonContainer">
+            <p className="title">{pokemon.name} </p>
+            <div className="pokemonImages">
+                {sprites.map((spriteImg) => (
+                    <Image
+                        key={spriteImg}
+                        src={spriteImg}
+                        width={100}
+                        height={100}
+                        alt={pokemon.name}
+                    />
+                ))}
+            </div>
+            <b>Types</b>
+            <div className="pokemonTypes">
+                {pokemon.types.map((poType: PokemonType) => (
+                    <div key={poType.type.name}>{poType.type.name}</div>
+                ))}
+            </div>
+        </div>
+    );
 }
