@@ -1,7 +1,7 @@
 import "./intro.css";
 import PokedexWithContext from "@/components/molecules/PokedexWithContext";
 
-export default function Home() {
+export default async function RootPage() {
     return (
         <div className="intro">
             <div>Bienvenue sur ton futur pokédex !</div>
