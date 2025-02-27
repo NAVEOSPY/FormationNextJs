@@ -1,12 +1,10 @@
 "use client";
 
 import "./intro.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import Pokemon from "../../atomic/Pokemon/Pokemon";
-import Loader from "../../atomic/Loader/Loader";
+import PokemonPreview from "../../atomic/Pokemon/PokemonPreview";
 import { PokemonInfo } from "../../molecules/PokedexWithContext";
-import { PokemonsContext } from "../../molecules/PokedexWithContext";
 import { useSearchParams } from "next/navigation";
 import Pagination from "@/components/molecules/Pagination/Pagination";
 import PokemonSearchBar from "../PokemonSearchBar/PokemonSearchBar";
@@ -36,7 +34,7 @@ export default function Pokedex({
     //if (!isLoading) {
     setPokemonsFilteredList(pokemonsList);
     //}
-  }, [isLoading, pokemonsList]);
+  }, [pokemonsList]);
 
   const filterPokemonsByName = (filterValue: string) => {
     setPokemonsFilteredList(
@@ -48,9 +46,9 @@ export default function Pokedex({
     );
   };
 
-  if (isError) {
-    return <div>Désolé, je ne peux pas accéder aux pokémons</div>;
-  }
+  // if (isError) {
+  //   return <div>Désolé, je ne peux pas accéder aux pokémons</div>;
+  // }
 
   return (
     <>
@@ -63,34 +61,28 @@ export default function Pokedex({
         <PokemonSearchBar callback={filterPokemonsByName} />
         <div>
           Commence par créer ton premier pokemon:
-          {isLoading ? (
-            <div className="loader">
-              <Loader />
-            </div>
-          ) : (
+          <div>
             <div>
-              <div>
-                <div>{paginate}</div>
-                <Pagination paginateState={paginateState} />
-              </div>
-              <div className="pokedex">
-                {pokemonsFilteredList
-                  .filter(
-                    (poke) =>
-                      poke.entry_number > (paginate - 1) * pokemonsByPage &&
-                      poke.entry_number < paginate * pokemonsByPage
-                  )
-                  .map((pok: PokemonInfo) => (
-                    <div key={pok.pokemon_species.name}>
-                      <Pokemon
-                        name={pok.pokemon_species.name}
-                        num={pok.entry_number}
-                      />
-                    </div>
-                  ))}
-              </div>
+              <div>{paginate}</div>
+              <Pagination paginateState={paginateState} />
             </div>
-          )}
+            <div className="pokedex">
+              {pokemonsFilteredList
+                .filter(
+                  (poke) =>
+                    poke.entry_number > (paginate - 1) * pokemonsByPage &&
+                    poke.entry_number < paginate * pokemonsByPage
+                )
+                .map((pok: PokemonInfo) => (
+                  <div key={pok.pokemon_species.name}>
+                    <PokemonPreview
+                      name={pok.pokemon_species.name}
+                      num={pok.entry_number}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
       </div>
     </>

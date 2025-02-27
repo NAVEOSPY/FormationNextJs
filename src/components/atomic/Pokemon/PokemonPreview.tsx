@@ -3,7 +3,7 @@ interface Pokemon {
   num: number;
 }
 
-const Pokemon = ({ name, num }: Pokemon) => {
+const PokemonPreview = ({ name, num }: Pokemon) => {
   return (
     <div>
       <img

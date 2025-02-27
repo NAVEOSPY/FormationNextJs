@@ -5,12 +5,18 @@ import PokedexWithContext, {
 } from "@/components/molecules/PokedexWithContext";
 
 export default async function RootPage() {
-  async function fetchPokemons() {
+  const fetchPokemons = async () => {
     // Avec des promesses
-    const response = await fetch("https://pokeapi.co/api/v2/pokedex/2", {});
+
+    const response = await fetch("https://pokeapi.co/api/v2/pokedex/2", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
     const resultat = await response.json();
     return resultat;
-  }
+  };
 
   const resultat: { pokemon_entries: PokemonInfo[] } = await fetchPokemons();
 
