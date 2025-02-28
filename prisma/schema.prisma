@@ -11,5 +11,21 @@ model User {
   id      Int      @id @default(autoincrement())
   email   String   @unique
   name    String?
+  teams   Team[]
+}
+model Pokemon{
+  id            Int       @id @default(autoincrement())
+  pokemonEntry  Int       @unique
+  level         String
+  team          Team      @relation(fields: [teamId],references: [id])
+  teamId        Int    
+}
+
+model Team{
+  id        Int     @id @default(autoincrement())
+  name      String  
+  user      User    @relation(fields: [userId],references: [id])
+  userId    Int     
+  pokemons  Pokemon[]
 }
 
