@@ -22,3 +22,9 @@
     justify-content: space-around;
     cursor: pointer;
 }
+
+.pokeLink {
+    text-decoration: none;
+    cursor: pointer;
+    color: black;
+}
