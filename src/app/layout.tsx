@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import "./global.css";
+import Image from "next/image";
+import Link from "next/link";
 
 const pokeTypo = localFont({
     src: "./fonts/pokemon-emerald.ttf",
@@ -18,7 +21,20 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="fr" className={pokeTypo.className}>
-            <body>{children}</body>
+            <body>
+                <div className="header">
+                    <Link href="/" className="pokeLinkHeader">
+                        <Image
+                            src="/images/logo.png"
+                            width="45"
+                            height="45"
+                            alt="pokelearn logo is a masterball"
+                        />
+                        <div className="headerTitle">PokéNext</div>
+                    </Link>
+                </div>
+                <div className="pageContent">{children}</div>
+            </body>
         </html>
     );
 }
