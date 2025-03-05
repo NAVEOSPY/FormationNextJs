@@ -1,7 +1,7 @@
-import { beforeAll, vi } from "vitest";
 import nextRouterMock from "next-router-mock";
+import { beforeEach, vi } from "vitest";
 
-beforeAll(() => {
+beforeEach(async () => {
     vi.mock("next/router", () => nextRouterMock);
     vi.mock("next/navigation", () => {
         return {
