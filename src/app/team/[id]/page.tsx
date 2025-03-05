@@ -16,12 +16,14 @@ export default async function PokemonPage({
     const teamId = (await params).id;
 
     // Utilise Prisma pour récupérer la team ici !
-    const team = await prisma.team.findUnique({
+    const teams = await prisma.team.findMany({
         where: { id: +teamId },
         select: {
             pokemons: true,
         },
     });
+
+    const team = teams[0];
 
     if (!team) {
         return <div>Oups, je n'ai pas trouvé d'équipe...</div>;
