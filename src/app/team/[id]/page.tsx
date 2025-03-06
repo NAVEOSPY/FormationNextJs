@@ -18,7 +18,7 @@ export default async function PokemonPage({
     // Utilise Prisma pour récupérer la team ici !
     const teams = await prisma.team.findMany({
         where: { id: +teamId },
-        select: {
+        include: {
             pokemons: true,
         },
     });
@@ -68,7 +68,10 @@ export default async function PokemonPage({
                             </div>
                             <div className="pokemonTypes">
                                 {poke.types.map((poType: PokemonType) => (
-                                    <div key={poType.type.name}>
+                                    <div
+                                        key={poType.type.name}
+                                        data-testid={`${poke.name}-${poType.type.name}`}
+                                    >
                                         {poType.type.name}
                                     </div>
                                 ))}
